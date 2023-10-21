@@ -31,6 +31,9 @@ Set Download/Upload limit in KB/s. Set `-1` for unlimited
 - Playback Start:  `-D 1024 -U 1024`
 - Playback Stop:  `-D -1 -U -1`
 
+###  Verify this setting is enabled
+`Settings -> Notifications & Newsletters -> (Show Advanced) Allow Playback Stop Notifications Exceeding Watched Percent.`
+
 
 # Usage
     -U		- Set max upload speed [KBs], use "-1" to set unlimited
