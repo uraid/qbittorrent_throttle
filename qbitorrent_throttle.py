@@ -6,7 +6,7 @@ import qbittorrentapi
 
 QBITTORRENT_USER	= "admin"
 QBITTORRENT_PASS	= "adminadmin"
-QBITTORRENT_HOST	= "localhost:8082"
+QBITTORRENT_HOST	= "localhost:8080"
 
 IGNORE_SSL_CERT = False
 DEBUG		= False
