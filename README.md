@@ -31,6 +31,15 @@ Set Download/Upload limit in KB/s. Set `-1` for unlimited
 - Playback Start:  `-D 1024 -U 1024`
 - Playback Stop:  `-D -1 -U -1`
 
+###  Stop all torrents
+**Triggers:** 
+- Playback Start
+- Playback Stop
+
+**Arguments:**
+- Playback Start:  `--stop`
+- Playback Stop:  `--start`
+
 ###  Verify this setting is enabled
 `Settings -> Notifications & Newsletters -> (Show Advanced) Allow Playback Stop Notifications Exceeding Watched Percent.`
 
