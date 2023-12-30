@@ -6,7 +6,7 @@ import qbittorrentapi
 
 QBITTORRENT_USER	= "admin"
 QBITTORRENT_PASS	= "adminadmin"
-QBITTORRENT_HOST	= "localhost:8080"
+QBITTORRENT_HOST	= "localhost:8082"
 
 IGNORE_SSL_CERT = False
 DEBUG		= False
@@ -106,23 +106,45 @@ class throttle():
 		
 		self.log_msg("[+] Sucessfully set max upload rate")
 		return True
+	
+	def pause_all_torrents(self):
+		self.qbt_client.torrents_pause(torrent_hashes='all')
+		self.log_msg("[+] All torrents paused")
+		return True
+
+	def resume_all_torrents(self):
+		self.qbt_client.torrents_resume(torrent_hashes='all')
+		self.log_msg("[+] All torrents resumed")
+		return True
 
 def main():
 	parser = argparse.ArgumentParser()
-	parser.add_argument("-D", "--maxdownload", type=int, required=True, help="Set max download speed [KBs]")
-	parser.add_argument("-U", "--maxupload", type=int, required=True, help="Set max upload speed [KBs]")
+	parser.add_argument("-D", "--maxdownload", type=int, required=False, help="Set max download speed [KBs]")
+	parser.add_argument("-U", "--maxupload", type=int, required=False, help="Set max upload speed [KBs]")
+	parser.add_argument("--stop", action='store_true', help="Stop all torrents")
+	parser.add_argument("--start", action='store_true', help="Start all torrents")
 
 	args = parser.parse_args()
 	throttle_obj = throttle()
 
 	if not throttle_obj.check_connection():
 		return False
+	
+	if args.stop:
+		if not throttle_obj.pause_all_torrents():
+			return False
 
-	if not throttle_obj.throttle_download(args.maxdownload):
-		return False
+	if args.start:
+		if not throttle_obj.resume_all_torrents():
+			return False
 
-	if not throttle_obj.throttle_upload(args.maxupload):
-		return False
+	if args.maxdownload is not None:
+		if not throttle_obj.throttle_download(args.maxdownload):
+			return False
+
+	if args.maxupload is not None:
+		if not throttle_obj.throttle_upload(args.maxupload):
+			return False
 		
 if __name__ == "__main__":
 	main()
